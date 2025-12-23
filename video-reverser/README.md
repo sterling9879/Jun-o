@@ -10,11 +10,23 @@ Este projeto detecta automaticamente vídeos numerados (001.mp4, 002.mp4, 003.mp
 
 ```
 /video-reverser/
-├── input/          # Pasta onde os vídeos serão colocados
-├── output/         # Pasta para o vídeo final
-├── install.sh      # Script de instalação para VPS
-├── process.sh      # Script principal de processamento
-└── README.md       # Esta documentação
+├── input/              # Pasta onde os vídeos serão colocados
+├── output/             # Pasta para o vídeo final
+├── install.sh          # Script de instalação para VPS
+├── process.sh          # Script principal de processamento (CLI)
+├── README.md           # Esta documentação
+└── web/                # Interface Web
+    ├── app.py          # Backend Flask
+    ├── install.sh      # Instalação da interface web
+    ├── start.sh        # Iniciar servidor web
+    ├── requirements.txt
+    ├── templates/
+    │   └── index.html
+    └── static/
+        ├── css/
+        │   └── style.css
+        └── js/
+            └── app.js
 ```
 
 ## Instalação
@@ -221,6 +233,57 @@ O sistema precisa de espaço livre equivalente a pelo menos 2x o tamanho total d
 2. **Backup**: Sempre mantenha um backup dos vídeos originais antes de usar `--clean`
 3. **Numeração**: Vídeos devem seguir padrão numérico no início do nome do arquivo
 4. **Memória**: VPS com pouca RAM podem ter problemas com vídeos muito grandes no modo `--reencode`
+
+## Interface Web
+
+O Video Reverser também inclui uma interface web moderna para facilitar o uso.
+
+### Instalação da Interface Web
+
+```bash
+# Após instalar o sistema base
+cd web
+chmod +x install.sh start.sh
+./install.sh
+```
+
+### Iniciar o Servidor Web
+
+```bash
+cd web
+
+# Modo desenvolvimento (padrão)
+./start.sh
+
+# Com porta customizada
+./start.sh --port 8080
+
+# Modo produção (com Gunicorn)
+./start.sh --production
+```
+
+### Acessar a Interface
+
+Abra o navegador em: `http://localhost:5000`
+
+### Funcionalidades da Interface Web
+
+- **Upload de vídeos**: Arraste e solte ou clique para selecionar
+- **Visualização da fila**: Lista todos os vídeos com duração, tamanho e resolução
+- **Validação de sequência**: Detecta automaticamente gaps na numeração
+- **Opções de processamento**: Nome do output, re-encode, forçar processamento
+- **Barra de progresso**: Acompanhe o processamento em tempo real
+- **Download direto**: Baixe o vídeo processado pela interface
+- **Histórico**: Lista de vídeos já processados
+
+### Screenshots
+
+A interface apresenta:
+- Design moderno dark theme
+- Cards organizados por função
+- Estatísticas em tempo real
+- Notificações toast para feedback
+- Responsivo para mobile
 
 ## Licença
 
